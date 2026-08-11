@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — BAU AIS</title>
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="inner.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-mark"><img src="assets/logo.png" alt="BAU AIS"></span><span>BAU AIS<small>Est. 2021</small></span></a>
+    <button class="nav-toggle" aria-label="Toggle nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <nav class="nav"><a href="index.html">Home</a><a href="about.html">About</a><a href="team.html">Team</a><a href="ai-revolution.html">AI Revolution</a><a href="events.html">Events</a><a href="publishing.html">AIS Publishing</a><a href="contact.html">Contact</a></nav>
+  </div>
+</header>
+<main>
+  <style>
+    .page-hero { position: relative; overflow: hidden; }
+    #teamCanvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 0; opacity: 0.55;
+    }
+    .page-hero > .container { position: relative; z-index: 1; }
+  </style>
+
+  <section class="page-hero">
+    <canvas id="teamCanvas"></canvas>
+    <div class="container">
+      <span class="eyebrow">// 02 / Team</span>
+      <h1>The<br><em>People</em><br>Behind It.</h1>
+      <p class="lede">500+ members across every department. Here are the ones keeping the lights on.</p>
+    </div>
+  </section>
+
+  <script>
+  (function(){
+    const c = document.getElementById('teamCanvas');
+    const ctx = c.getContext('2d');
+    let W, H, dpr, nodes;
+    function resize() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = c.clientWidth; H = c.clientHeight;
+      c.width = W * dpr; c.height = H * dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      build();
+    }
+    function build() {
+      nodes = [];
+      // Hexagonal grid of "people" nodes
+      const spacing = 70;
+      const rows = Math.ceil(H / spacing) + 2;
+      const cols = Math.ceil(W / spacing) + 2;
+      for (let r = -1; r < rows; r++) {
+        for (let cc = -1; cc < cols; cc++) {
+          const offsetX = (r % 2) * (spacing / 2);
+          nodes.push({
+            x: cc * spacing + offsetX,
+            y: r * spacing,
+            phase: Math.random() * Math.PI * 2,
+            highlighted: Math.random() < 0.08,
+          });
+        }
+      }
+    }
+    function draw(t) {
+      ctx.clearRect(0,0,W,H);
+      const time = t / 1000;
+      // Connections between close nodes
+      ctx.strokeStyle = 'rgba(77,255,170,0.05)';
+      ctx.lineWidth = 0.8;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i+1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const d = Math.hypot(a.x-b.x, a.y-b.y);
+          if (d < 80) {
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      // Nodes (people dots)
+      nodes.forEach(n => {
+        const pulse = 0.5 + 0.5 * Math.sin(time * 1.2 + n.phase);
+        if (n.highlighted) {
+          // Outer ring
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 8 + pulse*3, 0, Math.PI*2);
+          ctx.strokeStyle = `rgba(77,255,170,${0.15 + pulse*0.15})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          // Inner dot
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 3, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(77,255,170,${0.5 + pulse*0.3})`;
+          ctx.fill();
+        } else {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 1.5, 0, Math.PI*2);
+          ctx.fillStyle = 'rgba(77,255,170,0.18)';
+          ctx.fill();
+        }
+      });
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    resize(); requestAnimationFrame(draw);
+  })();
+  </script>
+
+  <section class="section-pad" style="background:var(--navy-900);">
+    <div class="container">
+      <div class="team-section-title reveal"><span>Executive Board</span><small>// Board / 2025–26</small></div>
+      <div class="team-grid reveal-stagger">
+        <div class="team-card"><div class="tc-avatar">EC</div><div class="tc-name">Ebrar Ceyhan</div><div class="tc-role">President</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">BNU</div><div class="tc-name">Betül Nur Uzan</div><div class="tc-role">Vice President</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">RT</div><div class="tc-name">Reyyan Tarhan</div><div class="tc-role">General Secretary</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">ZG</div><div class="tc-name">Zehra Gebeş</div><div class="tc-role">Organization Director</div><div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">MB</div><div class="tc-name">Muhammet Baştuğ</div><div class="tc-role">Organization Director</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">MT</div><div class="tc-name">Mercan Türemen</div><div class="tc-role">Marketing Director</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">FED</div><div class="tc-name">Furkan Enes Davarcıoğlu</div><div class="tc-role">Marketing Director</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">DY</div><div class="tc-name">Dila Yüksel</div><div class="tc-role">AI Publishing Director</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">ACÇ</div><div class="tc-name">Ayberk Cem Çevik</div><div class="tc-role">Sponsorship Director </div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">CK</div><div class="tc-name">Ceren Kutluk</div><div class="tc-role">Sponsorship Director</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">FIU</div><div class="tc-name">Fikriye Ilgın Ustaoğlu</div><div class="tc-role">Supervisory Board</div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">HB</div><div class="tc-name">Hazal Bakırcı</div><div class="tc-role">Supervisory Board </div> <div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+
+       <!---- <div class="team-card"><div class="tc-avatar">CY</div><div class="tc-name">Can Yılmaz</div><div class="tc-role">Treasurer</div><p class="tc-bio">Finance background with a machine learning obsession. Keeps us solvent while dreaming about gradient descent.</p><div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>->
+     --->
+      </div>
+
+      <!----
+      <div class="team-section-title reveal"><span>Team Leads</span><small>// Leads / 2025–26</small></div>
+      <div class="team-grid reveal-stagger">
+        <div class="team-card"><div class="tc-avatar">DA</div><div class="tc-name">Deniz Arslan</div><div class="tc-role">Research Lead</div><p class="tc-bio">Obsessed with LLM interpretability. Organizes the paper reading club and occasionally writes things worth publishing.</p><div class="tc-links"><a href="#" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">ZÖ</div><div class="tc-name">Zeynep Öztürk</div><div class="tc-role">Education Lead</div><p class="tc-bio">Designs and runs every bootcamp. Makes PyTorch make sense to people who have never written a for loop.</p><div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">BÇ</div><div class="tc-name">Burak Çelik</div><div class="tc-role">Events Lead</div><p class="tc-bio">The reason AI Revolution doesn't fall apart. Logistics, venue, catering, A/V — all him, usually calm about it.</p><div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">AY</div><div class="tc-name">Ayşe Yıldız</div><div class="tc-role">Publishing Lead</div><p class="tc-bio">Editor-in-chief of AIS Publishing. Former engineering student turned technical writer, currently both at once.</p><div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">EK</div><div class="tc-name">Emre Koç</div><div class="tc-role">Industry Relations</div><p class="tc-bio">Manages speaker outreach and sponsor relationships. Knows everyone, remembers every conversation.</p><div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+        <div class="team-card"><div class="tc-avatar">İT</div><div class="tc-name">İrem Tan</div><div class="tc-role">Design & Brand</div><p class="tc-bio">Keeps the club looking sharper than it has any right to on a student budget. Also ships code.</p><div class="tc-links"><a href="#" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+      </div>--->
+
+<!-----
+      <div class="team-section-title reveal"><span>Faculty Advisor</span><small>// Advisory</small></div>
+      <div class="team-grid reveal-stagger">
+        <div class="team-card"><div class="tc-avatar">FK</div><div class="tc-name">Fatih Kahraman</div><div class="tc-role">Advisor · AI Engineering</div>
+      </div>
+    -->
+      <div class="inner-cta reveal" style="margin-top:4rem;">
+        <div>
+          <span class="eyebrow">// Plus 50+ active members</span>
+          <h2>Across Every<br><em>Department.</em></h2>
+        </div>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn-primary">Join the team →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col"><div class="footer-brand">BAU AIS</div><address>Bahçeşehir University<br>Artificial Intelligence Society<br>Çırağan Cd., Beşiktaş, İstanbul</address></div>
+    <div class="footer-col"><h4>Explore</h4><ul><li><a href="about.html">About</a></li><li><a href="team.html">Team</a></li><li><a href="ai-revolution.html">AI Revolution</a></li><li><a href="events.html">Events</a></li></ul></div>
+    <div class="footer-col"><h4>Publishing</h4><ul><li><a href="publishing.html">AIS Publishing</a></li><li><a href="#">Medium</a></li><li><a href="#">Newsletter</a></li></ul></div>
+    <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">GitHub</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 BAU AIS · All rights reserved</span><span>Built by members, for members</span></div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>

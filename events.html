@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events — BAU AIS</title>
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="inner.css">
+<style>
+.bg-bootcamp  { background: linear-gradient(160deg, #0d1a3f 0%, #1a2d6b 100%); }
+.bg-halloween { background: linear-gradient(160deg, #08112e 0%, #122050 100%); }
+.bg-paper     { background: linear-gradient(160deg, #0d1a3f 0%, #08112e 100%); }
+.bg-hackathon { background: linear-gradient(160deg, #122050 0%, #0d1a3f 100%); }
+.bg-talk      { background: linear-gradient(160deg, #08112e 0%, #1a2d6b 100%); }
+.bg-newyear   { background: linear-gradient(160deg, #0d1a3f 0%, #243680 100%); }
+.bg-vision    { background: linear-gradient(160deg, #122050 0%, #08112e 100%); }
+.bg-orient    { background: linear-gradient(160deg, #08112e 0%, #122050 100%); }
+.bg-mixer     { background: linear-gradient(160deg, #1a2d6b 0%, #0d1a3f 100%); }
+.bg-air2      { background: linear-gradient(160deg, #0d1a3f 0%, #1a2d6b 60%, #243680 100%); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-mark"><img src="assets/logo.png" alt="BAU AIS"></span><span>BAU AIS<small>Est. 2021</small></span></a>
+    <button class="nav-toggle" aria-label="Toggle nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <nav class="nav"><a href="index.html">Home</a><a href="about.html">About</a><a href="team.html">Team</a><a href="ai-revolution.html">AI Revolution</a><a href="events.html">Events</a><a href="publishing.html">AIS Publishing</a><a href="contact.html">Contact</a></nav>
+  </div>
+</header>
+<main>
+  <style>
+    .page-hero { position: relative; overflow: hidden; }
+    #eventsCanvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 0; opacity: 0.65;
+    }
+    .page-hero > .container { position: relative; z-index: 1; }
+  </style>
+
+  <section class="page-hero">
+    <canvas id="eventsCanvas"></canvas>
+    <div class="container">
+      <span class="eyebrow">// 04 / Events</span>
+      <h1>Where<br>We<br><em>Show Up.</em></h1>
+      <p class="lede"></p>
+    </div>
+  </section>
+
+  <script>
+  (function(){
+    const c = document.getElementById('eventsCanvas');
+    const ctx = c.getContext('2d');
+    let W, H, dpr, markers, pulses;
+    function resize() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = c.clientWidth; H = c.clientHeight;
+      c.width = W * dpr; c.height = H * dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      build();
+    }
+    function build() {
+      // Multiple horizontal timeline tracks
+      const trackCount = 5;
+      const trackGap = H / (trackCount + 1);
+      markers = [];
+      for (let t = 0; t < trackCount; t++) {
+        const y = trackGap * (t + 1);
+        const markerCount = 6 + Math.floor(Math.random() * 4);
+        for (let m = 0; m < markerCount; m++) {
+          markers.push({
+            x: (m + 0.5) * (W / markerCount) + (Math.random() - 0.5) * 40,
+            y: y,
+            size: Math.random() < 0.3 ? 6 : 3,
+            phase: Math.random() * Math.PI * 2,
+            track: t,
+          });
+        }
+      }
+      pulses = [];
+    }
+    function spawnPulse() {
+      if (markers.length === 0) return;
+      const m = markers[Math.floor(Math.random() * markers.length)];
+      pulses.push({ x: m.x, y: m.y, r: 0, alpha: 1 });
+    }
+    let lastSpawn = 0;
+    function draw(t) {
+      ctx.clearRect(0,0,W,H);
+      const time = t / 1000;
+
+      // Track lines (horizontal)
+      const trackYs = [...new Set(markers.map(m => m.y))];
+      trackYs.forEach(y => {
+        ctx.strokeStyle = 'rgba(77,255,170,0.06)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 6]);
+        ctx.beginPath();
+        ctx.moveTo(20, y); ctx.lineTo(W - 20, y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      });
+
+      // Markers
+      markers.forEach(m => {
+        const pulse = 0.5 + 0.5 * Math.sin(time * 1.2 + m.phase);
+        // Vertical tick
+        ctx.strokeStyle = 'rgba(77,255,170,0.15)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(m.x, m.y - 6); ctx.lineTo(m.x, m.y + 6);
+        ctx.stroke();
+        // Dot
+        if (m.size > 4) {
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.size + pulse * 2, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(77,255,170,${0.2 + pulse * 0.2})`;
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(77,255,170,${0.5 + pulse * 0.3})`;
+          ctx.fill();
+        } else {
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(77,255,170,0.3)';
+          ctx.fill();
+        }
+      });
+
+      // Spawn random pulses
+      if (t - lastSpawn > 600) {
+        spawnPulse();
+        lastSpawn = t;
+      }
+      // Draw pulses (expanding rings)
+      pulses = pulses.filter(p => {
+        p.r += 0.8;
+        p.alpha -= 0.012;
+        if (p.alpha <= 0) return false;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(77,255,170,${p.alpha * 0.4})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        return true;
+      });
+
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    resize(); requestAnimationFrame(draw);
+  })();
+  </script>
+
+  <section class="section-pad" style="background:var(--navy-900);">
+    <div class="container">
+      <div class="event-filters">
+        <button class="filter-pill active" data-cat="all">All</button>
+        <button class="filter-pill" data-cat="education">Education</button>
+        <button class="filter-pill" data-cat="research">Research</button>
+        <button class="filter-pill" data-cat="industry">Industry</button>
+        <button class="filter-pill" data-cat="social">Social</button>
+      </div>
+
+      
+
+
+      
+      <div class="events-gallery reveal">
+        <div class="ev-card span-8" data-cat="education">
+          <div class="ev-bg bg-bootcamp"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">7-14 MAR 2026</div>
+            <div class="ev-title">AIS Mastermind: NLP & Neural Networks</div>
+            <p class="ev-desc">As part of the AIS Mastermind program, we continued with sessions focused on language modeling, neural network-based language models, attention mechanisms, Transformers, and RNN-based text generation. Participants explored the foundations of modern NLP and took important steps toward understanding how today’s AI language models work.</p>
+            <a href="https://www.instagram.com/p/DV_it8PAtj4/" style="color:var(--green);">See it in our social media →</a></p>
+          
+          </div>
+        </div>
+
+
+
+          <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">12 MAR 2026</div>
+            <div class="ev-title">AI Publish: Article Reading</div>
+            <p class="ev-desc">An article reading and discussion session with Dr. Barış Özcan on large language models, prompt engineering, AI limitations, and how LLMs shape modern AI tools.</p>
+            <a href="https://www.instagram.com/p/DV-qiuGgn34/" style="color:var(--green);">See it in our social media →</a></p>
+          
+          </div>
+        </div>  
+
+
+      
+          <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">7 JAN 2026</div>
+            <div class="ev-title">AI Publish: Article Reading</div>
+            <p class="ev-desc">An article reading and discussion session on AI, philosophy, consciousness, mind, and psychology.</p>
+          </div>
+        </div>            
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Social</span>
+            <div class="ev-date">29 DEC 2025</div>
+            <div class="ev-title">New Year Party</div>
+            <p class="ev-desc">We celebrated the new year together with Project AIS and GDG on Campus BAU through a fun social event filled with icebreaker games, group activities, snacks, music, and surprise gifts. The event created a warm space for students to connect, relax, and enter the new year with community spirit.</p>
+            <a href="https://www.instagram.com/p/DTAYQaVAnwu/" style="color:var(--green);">See it in our social media →</a></p>
+</div>
+       
+        </div>            
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Social</span>
+            <div class="ev-date">25 DEC 2025</div>
+            <div class="ev-title">Van Gogh Digital Experience</div>
+            <p class="ev-desc">We organized a cultural visit to the Van Gogh digital experience at İBB Digital Experience Center. Participants explored the intersection of art, technology, past, present, and future through an immersive exhibition inspired by Van Gogh’s work.</p>
+            <a href="https://www.instagram.com/p/DSxDtcBgrCh/" style="color:var(--green);">See it in our social media →</a></p>
+          
+          </div>
+        </div>            
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Social</span>
+            <div class="ev-date">18 DEC 2025</div>
+            <div class="ev-title">AIS Movie Night</div>
+            <p class="ev-desc">A community movie night where participants watched Ex Machina and explored themes of AI, ethics, consciousness, and human–machine interaction.</p>
+          </div>
+        </div>  
+
+
+
+
+
+          <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Industry</span>
+            <div class="ev-date">5 DEC 2025</div>
+            <div class="ev-title">BLL Technical Trip</div>
+            <p class="ev-desc"></p>A technical visit where participants explored VR, e-sports, drone simulation, media technologies, and interactive digital experience areas.</p>
+            <a href="https://www.instagram.com/p/DSMunNtgijU/" style="color:var(--green);">See it in our social media →</a></p>
+
+          </div>
+        </div>        
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Social</span>
+            <div class="ev-date">30 OCT 2025</div>
+            <div class="ev-title">Code or Costume? Halloween Party</div>
+            <p class="ev-desc">A Halloween-themed community event where students came together to socialize, network, and celebrate team spirit with costumes and music.</p>
+          </div>
+        </div>        
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">4 Weeks - APR, MAY 2025</div>
+            <div class="ev-title">AIS Mastermind: Machine Learning</div>
+            <p class="ev-desc">AIS Mastermind is a 4-week, 8-session machine learning program designed to help participants build a strong foundation in AI. Through expert-led lessons, project-based learning, and a hybrid format, participants strengthened their machine learning skills and earned a certificate at the end of the program.</p>
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Industry</span>
+            <div class="ev-date">21-22 DEC 2024</div>
+            <div class="ev-title">AI Revolution 360</div>
+            <p class="ev-desc">Organized by BAU Artificial Intelligence Society, AI Revolution 360 brought together professionals, academics, and students to discuss the evolving impact of artificial intelligence across multiple sectors. The summit featured sessions on digital transformation, AI leadership, data privacy, deepfake risks, quantum computing, IoT, NVIDIA & AI, Microsoft’s transformation journey, and the future of work.</p>
+             <a href="https://www.instagram.com/p/DD36_JPi1xS/" style="color:var(--green);">See it in our social media →</a></p>
+         
+          </div>
+        </div>       
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">30 NOV 2024</div>
+            <div class="ev-title">Earning with AI Tools</div>
+            <p class="ev-desc">A practical workshop on discovering AI tools, exploring digital opportunities, and learning how artificial intelligence can support new ways of earning income.</p>
+          </div>
+        </div>      
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Social</span>
+            <div class="ev-date">16 OCT 2024</div>
+            <div class="ev-title">AIS Meet-Up</div>
+            <p class="ev-desc">A community gathering where AIS members came together to connect, share ideas, and strengthen the team spirit.</p>
+            <a href="https://www.instagram.com/p/DBUEP4ZNJBP/" style="color:var(--green);">See it in our social media →</a></p>
+
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-halloween"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Industry</span>
+            <div class="ev-date">29 MAR 2024</div>
+            <div class="ev-title">AkınRobotics Technical Trip</div>
+            <p class="ev-desc">A technical visit to AkınRobotics and the Robot Museum, where participants explored robotics, AI technologies, and innovative projects such as ADA-7.</p>
+            <a href="https://www.instagram.com/p/C5Oc8Q-N0Kn/" style="color:var(--green);">See it in our social media →</a></p>
+
+          </div>
+        </div>
+
+
+        <div class="ev-card span-4" data-cat="research">
+          <div class="ev-bg bg-paper"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">14 MAR 2024</div>
+            <div class="ev-title">AI Academic Discussion Night — English Session</div>
+            <p class="ev-desc"> An English discussion event for international members, featuring article reading, a guided presentation, and conversation on recent AI developments.</p>
+
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="industry">
+          <div class="ev-bg bg-talk"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">6 MAR 2024</div>
+            <div class="ev-title">AI Academic Discussion Night</div>
+            <p class="ev-desc">An interactive discussion event where participants explored recent AI developments through article reading, guided presentation, and group conversation.</p>
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="education">
+          <div class="ev-bg bg-hackathon"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">27 DEC 2023</div>
+            <div class="ev-title">PYTHON 101</div>
+            <p class="ev-desc"> A beginner-friendly session with Boran Oktay on Python fundamentals, data science basics, and the first steps toward AI and machine learning.</p>
+          </div>
+        </div>
+
+
+
+
+        
+        <div class="ev-card span-4" data-cat="research">
+          <div class="ev-bg bg-paper"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">20 DEC 2023</div>
+            <div class="ev-title">SQL 101 Database System</div>
+            <p class="ev-desc">We hosted Bilal Taş, Software Engineer at Mercedes-Benz Otomotiv, for a beginner-friendly SQL 101 session. Participants learned the fundamentals of database systems and explored how SQL is used to store, manage, and query data.</p>
+            <a href="https://www.instagram.com/p/CmJARlvNiKm/?img_index=1" style="color:var(--green);">See it in our social media →</a></p>
+
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="industry">
+          <div class="ev-bg bg-talk"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Industry</span>
+            <div class="ev-date">18 DEC 2023</div>
+            <div class="ev-title">Digital Marketing with AI</div>
+            <p class="ev-desc">Together with BAU Marketing Club, we organized “Digital Marketing with AI” to examine how artificial intelligence is reshaping the marketing industry. With sessions by Enis Şen and Selin Ergin, participants explored AI-focused digital marketing approaches, digital transformation, and AI-supported advertising strategies.</p>
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="education">
+          <div class="ev-bg bg-hackathon"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">20 NOV 2023</div>
+            <div class="ev-title">Freelancing with AI</div>
+            <p class="ev-desc"> We hosted Merve Altunsu for a session on starting a freelance career with AI, focusing on productivity, workflow improvement, and new opportunities in the digital work ecosystem.</p>
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="education">
+          <div class="ev-bg bg-vision"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Social</span>
+            <div class="ev-date">16 NOV 2023</div>
+            <div class="ev-title">AIS Meet-Up Event</div>
+            <p class="ev-desc">AIS Meet-Up Event, where students come together to meet the team, learn more about our society, and discover upcoming opportunities, projects, and events. A fun gathering with networking, conversation, and surprise gifts.</p>
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-orient"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">17 APR 2023</div>
+            <div class="ev-title">Quantum Machine Learning</div>
+            <p class="ev-desc">Join us for a session with Şaban Dalaman, Senior Murex Expert, to explore the intersection of quantum computing and machine learning, and discover how emerging technologies may shape the future of AI.</p>
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="social">
+          <div class="ev-bg bg-newyear"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">4 JAN 2023</div>
+            <div class="ev-title">Machine Learning: Roadmap in the AI Industry</div>
+            <p class="ev-desc">An inspiring session on the AI industry, machine learning, and startup roadmaps with EVAM founder Can Alhas.</p>
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="industry">
+          <div class="ev-bg bg-mixer"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Social</span>
+            <div class="ev-date">28 DEC 2022</div>
+            <div class="ev-title">AIS Movie Night</div>
+            <p class="ev-desc"> Gathering the community for a night of movies and networking.</p>
+          </div>
+        </div>
+        <div class="ev-card span-4" data-cat="education">
+          <div class="ev-bg bg-air2"></div><div class="ev-overlay"></div>
+          <div class="ev-content">
+            <span class="ev-tag" style="color:var(--green)">Education</span>
+            <div class="ev-date">17 DEC 2022</div>
+            <div class="ev-title">Python and Data Science Workshop</div>
+            <p class="ev-desc">Our first event <3 <a href="https://www.instagram.com/p/CmJARlvNiKm/?img_index=1" style="color:var(--green);">See it in our social media →</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:var(--navy-800);">
+    <div class="container">
+      <div class="inner-cta reveal">
+        <div>
+          <span class="eyebrow">// Stay in the Loop</span>
+          <h2>Never Miss<br><em>An Event.</em></h2>
+        </div>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn-primary">Subscribe →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col"><div class="footer-brand">BAU AIS</div><address>Bahçeşehir University<br>Artificial Intelligence Society<br>Çırağan Cd., Beşiktaş, İstanbul</address></div>
+    <div class="footer-col"><h4>Explore</h4><ul><li><a href="about.html">About</a></li><li><a href="team.html">Team</a></li><li><a href="ai-revolution.html">AI Revolution</a></li><li><a href="events.html">Events</a></li></ul></div>
+    <div class="footer-col"><h4>Publishing</h4><ul><li><a href="publishing.html">AIS Publishing</a></li><li><a href="#">Medium</a></li><li><a href="#">Newsletter</a></li></ul></div>
+    <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">GitHub</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 BAU AIS · All rights reserved</span><span>Built by members, for members</span></div>
+</footer>
+<script src="main.js"></script>
+<script>
+document.querySelectorAll('.filter-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    document.querySelectorAll('.ev-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>

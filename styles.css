@@ -1,0 +1,365 @@
+/* ============================================
+   BAU AIS — Global Stylesheet
+   Font: Bebas Neue (display) + DM Sans (body) + JetBrains Mono
+   Palette: Deep navy dominant, electric green accent
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* ── Navy scale (dominant) ── */
+  --navy-950: #02060f;
+  --navy-900: #050a1f;
+  --navy-800: #08112e;
+  --navy-700: #0d1a3f;
+  --navy-600: #122050;
+  --navy-500: #1a2d6b;
+  --navy-400: #243680;
+  --navy-300: #2e4196;
+
+  /* ── Accent ── */
+  --green: #4dffaa;
+  --green-dim: #2ecc7a;
+  --green-glow: rgba(77,255,170,0.2);
+
+  /* ── Neutrals ── */
+  --white: #ffffff;
+  --off-white: #e8edf5;
+  --gray-300: #a8b4cc;
+  --gray-500: #5e6e8a;
+  --gray-700: #2d3a52;
+
+  /* ── Typography ── */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* ── Layout ── */
+  --container: 1280px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --header-h: 84px;
+
+  /* ── Easing ── */
+  --ease: cubic-bezier(0.65, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─────────────────── RESET ─────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy-900);
+  color: var(--off-white);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ─────────────────── NOISE GRAIN ─────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ─────────────────── LAYOUT ─────────────────── */
+main { padding-top: var(--header-h); }
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.section-pad { padding: clamp(5rem, 10vw, 9rem) 0; }
+
+/* ─────────────────── HEADER ─────────────────── */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--gutter);
+  background: rgba(5, 10, 31, 0.8);
+  backdrop-filter: blur(24px) saturate(150%);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.4s var(--ease), border-color 0.4s;
+}
+.site-header.scrolled {
+  background: rgba(5, 10, 31, 0.97);
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+.header-inner {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+}
+.logo-mark {
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.logo-mark svg,
+.logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+.logo small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--green);
+  font-weight: 400;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+.nav { display: flex; align-items: center; gap: 0.2rem; }
+.nav a {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-300);
+  padding: 0.5rem 0.85rem;
+  border-radius: 2px;
+  transition: color 0.25s, background 0.25s;
+}
+.nav a:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+.nav a.active { color: var(--green); }
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--off-white);
+  padding: 0.5rem 0.65rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.nav-toggle svg { width: 20px; height: 20px; display: block; }
+@media (max-width: 980px) {
+  .nav-toggle { display: block; }
+  .nav {
+    position: fixed;
+    top: var(--header-h); left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--navy-800);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0.5rem var(--gutter) 1rem;
+    transform: translateY(-110%);
+    transition: transform 0.4s var(--ease);
+  }
+  .nav.open { transform: translateY(0); }
+  .nav a { padding: 0.85rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); border-radius: 0; }
+}
+
+/* ─────────────────── PAGE HERO (inner pages) ─────────────────── */
+.page-hero {
+  padding: clamp(5rem, 12vw, 9rem) 0 clamp(3rem, 6vw, 5rem);
+  background: var(--navy-800);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.page-hero .eyebrow { display: block; margin-bottom: 1.2rem; }
+.page-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  text-transform: uppercase;
+}
+.page-hero h1 em {
+  font-style: normal;
+  color: var(--green);
+}
+.page-hero .lede {
+  margin-top: 2rem;
+  max-width: 600px;
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  color: var(--gray-300);
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+/* ─────────────────── EYEBROW ─────────────────── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  color: var(--green);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ─────────────────── SECTION HEAD ─────────────────── */
+.section-head { margin-bottom: 4rem; }
+.section-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  letter-spacing: 0.04em;
+  line-height: 0.92;
+  color: var(--white);
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+.section-head h2 em { font-style: normal; color: var(--green); }
+.section-head p {
+  margin-top: 1.5rem;
+  max-width: 560px;
+  color: var(--gray-300);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* ─────────────────── BUTTONS ─────────────────── */
+.btn-primary, .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  border-radius: 1px;
+}
+.btn-primary {
+  background: var(--green);
+  color: var(--navy-900);
+}
+.btn-primary:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--green-glow);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--off-white);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+.btn-ghost:hover {
+  border-color: var(--green);
+  color: var(--green);
+  transform: translateY(-2px);
+}
+
+/* ─────────────────── FOOTER ─────────────────── */
+.site-footer {
+  background: var(--navy-950);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 5rem var(--gutter) 2.5rem;
+}
+.footer-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem 4rem;
+}
+@media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+.footer-col p, .footer-col address {
+  color: var(--gray-500);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  font-style: normal;
+}
+.footer-col h4 {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  color: var(--green);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 0.6rem; }
+.footer-col a { color: var(--gray-300); font-size: 0.9rem; transition: color 0.2s; }
+.footer-col a:hover { color: var(--green); }
+.footer-bottom {
+  max-width: var(--container);
+  margin: 3rem auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--gray-500);
+  text-transform: uppercase;
+}
+
+/* ─────────────────── LIVE DOT ─────────────────── */
+.live-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  animation: blink 2s ease-in-out infinite;
+  vertical-align: middle;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ─────────────────── REVEAL ─────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.reveal-stagger.in > * { opacity: 1; transform: none; }
+.reveal-stagger.in > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger.in > *:nth-child(2) { transition-delay: 0.15s; }
+.reveal-stagger.in > *:nth-child(3) { transition-delay: 0.25s; }
+.reveal-stagger.in > *:nth-child(4) { transition-delay: 0.35s; }
+.reveal-stagger.in > *:nth-child(5) { transition-delay: 0.45s; }
+.reveal-stagger.in > *:nth-child(6) { transition-delay: 0.55s; }
+
+/* ─────────────────── SCROLLBAR ─────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--navy-900); }
+::-webkit-scrollbar-thumb { background: var(--navy-500); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--green); }
+::selection { background: var(--green); color: var(--navy-900); }

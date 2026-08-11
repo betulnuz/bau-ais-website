@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Revolution — BAU AIS</title>
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="inner.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-mark"><img src="assets/logo.png" alt="BAU AIS"></span><span>BAU AIS<small>Est. 2021</small></span></a>
+    <button class="nav-toggle" aria-label="Toggle nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <nav class="nav"><a href="index.html">Home</a><a href="about.html">About</a><a href="team.html">Team</a><a href="ai-revolution.html">AI Revolution</a><a href="events.html">Events</a><a href="publishing.html">AIS Publishing</a><a href="contact.html">Contact</a></nav>
+  </div>
+</header>
+<main>
+  <style>
+    #revCanvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 0; opacity: 0.7;
+    }
+    .rev-corners { position: absolute; inset: 1.5rem; z-index: 1; pointer-events: none; }
+    .rev-corners span {
+      position: absolute; width: 22px; height: 22px;
+      border-color: rgba(77,255,170,0.25); border-style: solid;
+    }
+    .rev-corners span:nth-child(1) { top: 0; left: 0; border-width: 1px 0 0 1px; }
+    .rev-corners span:nth-child(2) { top: 0; right: 0; border-width: 1px 1px 0 0; }
+    .rev-corners span:nth-child(3) { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
+    .rev-corners span:nth-child(4) { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+    .rev-status-bar {
+      position: absolute; top: calc(var(--header-h) + 1rem); left: 0; right: 0;
+      display: flex; justify-content: space-between; padding: 0 2rem;
+      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.22em;
+      color: rgba(77,255,170,0.4); text-transform: uppercase; z-index: 2; pointer-events: none;
+    }
+  </style>
+
+  <section class="page-hero summit-hero" style="position:relative;overflow:hidden;">
+    <canvas id="revCanvas"></canvas>
+    <div class="rev-corners"><span></span><span></span><span></span><span></span></div>
+    <div class="rev-status-bar">
+      <span>// SIGNAL · INCOMING</span>
+      <span>FREQ 21.05 MHz</span>
+    </div>
+    <div class="container" style="position:relative;z-index:1;">
+      <span class="eyebrow">// 03 / AI Revolution · Edition II</span>
+
+      <h1>AI<br><em>Revolution</em><br>2026.</h1>
+      <p class="lede"> BAU Artificial Intelligence Society Presents.</p>
+      <p class="lede"> A one-day student-led summit bringing together hands-on workshops,
+      inspiring talks, and cross-disciplinary conversations on the future of artificial intelligence.</p>
+
+      <div class="summit-meta">
+        <div class="sm-item"><strong>Date</strong><span>April 18–19, 2026</span></div>
+        <div class="sm-item"><strong>Venue</strong><span>BAU Beşiktaş</span></div>
+        <div class="sm-item"><strong>Format</strong><span>In-person </span></div>
+        <div class="sm-item"><strong>Capacity</strong><span>200+</span></div>
+        <div class="sm-item"><strong>Status</strong><span><span class="live-dot"></span> Registration soon</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:var(--navy-900);">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"></span>
+        <h2>About<br><em>the Summit</em></h2>
+        <p> AI Revolution is the flagship summit of Bahçeşehir University Artificial Intelligence
+    Society, designed to bring students, researchers, entrepreneurs, and industry
+    professionals together around the rapidly evolving world of artificial intelligence.</p>
+      </div>
+      <!---<div class="tracks reveal-stagger">
+        <div class="track">
+          <span class="track-tag">Track A</span>
+          <h3>Frontiers of Research</h3>
+          <p>For the paper-readers, the builders, and the theoretically inclined.</p>
+          <ul>
+            <li>Foundation Models in 2026</li>
+            <li>Multi-modal AI</li>
+            <li>Reasoning & Agents</li>
+            <li>Open-source Frontiers</li>
+          </ul>
+        </div>
+        <div class="track">
+          <span class="track-tag">Track B</span>
+          <h3>Builders & Industry</h3>
+          <p>For founders, engineers, and anyone shipping AI products.</p>
+          <ul>
+            <li>AI in Production</li>
+            <li>Founder Stories</li>
+            <li>Hiring in 2026</li>
+            <li>Cost & Scale</li>
+          </ul>
+        </div>
+        <div class="track">
+          <span class="track-tag">Track C</span>
+          <h3>Society & Ethics</h3>
+          <p>For the questions that don't have clean answers yet.</p>
+          <ul>
+            <li>Alignment & Safety</li>
+            <li>AI Policy in Turkey</li>
+            <li>Labor & Automation</li>
+            <li>Open Panel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+--->
+<!----
+  <section class="section-pad" style="background:var(--navy-800);">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">// Past Editions</span>
+        <h2>Where<br><em>We've Been.</em></h2>
+      </div>
+      <div class="reveal">
+        <div class="past-summit">
+          <div class="ps-year">2025</div>
+          <div class="ps-content">
+            <h3>Beyond the Hype</h3>
+            <p>After a year of AI everywhere, we asked harder questions. What's real, what's noise, and what's coming next? Speakers from research labs, production teams, and policy organizations joined us for what became our most discussed edition.</p>
+            <div class="ps-stats">
+              <div><strong>1,000+</strong><span>Attendees</span></div>
+              <div><strong>22</strong><span>Talks</span></div>
+              <div><strong>6</strong><span>Workshops</span></div>
+              <div><strong>14</strong><span>Sponsors</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="past-summit">
+          <div class="ps-year">2024</div>
+          <div class="ps-content">
+            <h3>The Beginning</h3>
+            <p>Our first summit. We had no idea if anyone would show up. Five hundred people did. We learned more from running it than from attending a dozen other conferences. It set the template for everything that followed.</p>
+            <div class="ps-stats">
+              <div><strong>500+</strong><span>Attendees</span></div>
+              <div><strong>12</strong><span>Talks</span></div>
+              <div><strong>3</strong><span>Workshops</span></div>
+              <div><strong>8</strong><span>Sponsors</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  -->
+
+  <section class="section-pad" style="background:var(--navy-900);">
+    <div class="container">
+      <div class="inner-cta reveal">
+        <div>
+          <span class="eyebrow">// Stay Updated</span>
+          <h2>Don't Miss<br><em>Registration.</em></h2>
+        </div>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn-primary">Notify me →</a>
+          <a href="contact.html" class="btn-ghost">Sponsor inquiry →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col"><div class="footer-brand">BAU AIS</div><address>Bahçeşehir University<br>Artificial Intelligence Society<br>Çırağan Cd., Beşiktaş, İstanbul</address></div>
+    <div class="footer-col"><h4>Explore</h4><ul><li><a href="about.html">About</a></li><li><a href="team.html">Team</a></li><li><a href="ai-revolution.html">AI Revolution</a></li><li><a href="events.html">Events</a></li></ul></div>
+    <div class="footer-col"><h4>Publishing</h4><ul><li><a href="publishing.html">AIS Publishing</a></li><li><a href="#">Medium</a></li><li><a href="#">Newsletter</a></li></ul></div>
+    <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">GitHub</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 BAU AIS · All rights reserved</span><span>Built by members, for members</span></div>
+</footer>
+<script src="main.js"></script>
+<script>
+(function(){
+  const c = document.getElementById('revCanvas');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, dpr;
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = c.clientWidth; H = c.clientHeight;
+    c.width = W * dpr; c.height = H * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  // Multi-layered wave + bars
+  function draw(t) {
+    ctx.clearRect(0,0,W,H);
+    const time = t / 1000;
+
+    // Vertical frequency bars across full width
+    const barW = 4;
+    const barGap = 8;
+    const totalBar = barW + barGap;
+    const barCount = Math.ceil(W / totalBar);
+    const baseY = H * 0.5;
+    for (let i = 0; i < barCount; i++) {
+      const x = i * totalBar;
+      // Simulated frequency response - several sine layers
+      const noise = Math.sin(time*1.5 + i*0.3) * 0.5
+                  + Math.sin(time*0.8 + i*0.15) * 0.3
+                  + Math.sin(time*2.2 + i*0.5) * 0.2;
+      const amp = (noise + 1) * 0.5; // 0..1
+      const barH = 8 + amp * Math.min(120, H * 0.3);
+      ctx.fillStyle = `rgba(77,255,170,${0.05 + amp * 0.2})`;
+      ctx.fillRect(x, baseY - barH/2, barW, barH);
+    }
+
+    // Smooth wave line on top
+    ctx.strokeStyle = 'rgba(77,255,170,0.35)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    for (let x = 0; x < W; x += 2) {
+      const y = baseY * 0.6 + Math.sin(x * 0.012 + time * 1.5) * 30
+                            + Math.sin(x * 0.03 + time * 0.8) * 12;
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Second wave (offset, fainter, lower)
+    ctx.strokeStyle = 'rgba(77,255,170,0.18)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let x = 0; x < W; x += 2) {
+      const y = baseY * 1.45 + Math.sin(x * 0.015 + time * 1.1 + 1) * 25
+                              + Math.sin(x * 0.04 + time * 0.6) * 10;
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Center horizontal axis
+    ctx.strokeStyle = 'rgba(77,255,170,0.08)';
+    ctx.setLineDash([2, 4]);
+    ctx.beginPath();
+    ctx.moveTo(0, baseY); ctx.lineTo(W, baseY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize, { passive: true });
+  resize(); requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

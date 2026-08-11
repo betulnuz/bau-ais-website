@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIS Publishing — BAU AIS</title>
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="inner.css">
+</head>
+<body class="pub-page">
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-mark"><img src="assets/logo.png" alt="BAU AIS"></span><span>BAU AIS<small>Est. 2021</small></span></a>
+    <button class="nav-toggle" aria-label="Toggle nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <nav class="nav"><a href="index.html">Home</a><a href="about.html">About</a><a href="team.html">Team</a><a href="ai-revolution.html">AI Revolution</a><a href="events.html">Events</a><a href="publishing.html">AIS Publishing</a><a href="contact.html">Contact</a></nav>
+  </div>
+</header>
+<main>
+  <style>
+    .page-hero { position: relative; overflow: hidden; }
+    #pubCanvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 0; opacity: 0.45;
+    }
+    .pub-code-block {
+      position: absolute; top: 50%; right: 4%; transform: translateY(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; line-height: 1.6;
+      color: rgba(77,255,170,0.35);
+      padding: 1.5rem 1.8rem;
+      border: 1px solid rgba(77,255,170,0.12);
+      background: rgba(8,17,46,0.6);
+      backdrop-filter: blur(10px);
+      max-width: 320px;
+      z-index: 1;
+      pointer-events: none;
+      animation: codePulse 4s ease-in-out infinite;
+    }
+    @keyframes codePulse {
+      0%, 100% { border-color: rgba(77,255,170,0.12); }
+      50% { border-color: rgba(77,255,170,0.25); }
+    }
+    .pub-code-block .ck { color: rgba(77,255,170,0.65); }
+    .pub-code-block .cn { color: rgba(232,237,245,0.5); }
+    @media (max-width: 980px) { .pub-code-block { display: none; } }
+    .page-hero > .container { position: relative; z-index: 2; }
+  </style>
+
+  <section class="page-hero">
+    <canvas id="pubCanvas"></canvas>
+    <div class="pub-code-block" aria-hidden="true">
+<span class="ck">$</span> <span class="cn">cat</span> publishing/index.md<br>
+<span class="ck">---</span><br>
+<span class="ck">title:</span> <span class="cn">"AIS Publishing"</span><br>
+<span class="ck">volume:</span> III<br>
+<span class="ck">issue:</span> 04<br>
+<span class="ck">date:</span> 2026-04<br>
+<span class="ck">articles:</span> 16<br>
+<span class="ck">authors:</span> 12<br>
+<span class="ck">status:</span> <span class="cn">published</span><br>
+<span class="ck">---</span><br>
+<br>
+<span class="ck">$</span> <span class="cn">git log</span> --oneline | head -3<br>
+<span class="cn">a8f4c2</span> add: convergence essay<br>
+<span class="cn">7d3e91</span> fix: typos in DPO post<br>
+<span class="cn">b1c5a0</span> publish: vol III · 04<br>
+    </div>
+    <div class="container">
+      <span class="eyebrow">// 05 / AIS Publishing · Vol. III · Issue 04 · 2026</span>
+      <h1>AIS<br><em>Publishing.</em></h1>
+      <p class="lede">Research notes, paper reviews, essays, and tutorials by BAU AIS members. Read on Medium or in the archive.</p>
+      <div style="display:flex;gap:1rem;margin-top:2rem;">
+        <a href="#" class="btn-primary">Read on Medium →</a>
+        <a href="#" class="btn-ghost">Browse Archive →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:var(--navy-900);">
+    <div class="container">
+      <div class="journal-feature reveal">
+        <div class="journal-body">
+          <div class="journal-meta">
+            <span>Feature</span><span>Research Notes</span><span>March 2026</span>
+          </div>
+          <h2>The Quiet Convergence: Why Every Frontier Model Started Looking the Same</h2>
+          <p class="lede">By 2025, the architectural differences between the major frontier models had collapsed. This piece asks why — and what it means for the field.</p>
+          <div class="body">
+            <p>Something quietly happened in 2025: the frontier models stopped being architecturally interesting. Not in terms of capability — those kept climbing — but in terms of design decisions. The bets converged. Everyone chose the same transformer variants, the same RLHF pipelines, the same inference-time scaling approaches.</p>
+            <p>Whether this is consolidation around proven ideas or premature closure on a design space that still has unexplored corners is the question this piece tries to answer honestly.</p>
+          </div>
+          <div class="journal-author"><strong>Deniz Arslan</strong><span>Research Lead, BAU AIS</span></div>
+        </div>
+        <div class="journal-aside">
+          <div>
+            <h4>In This Issue</h4>
+            <ul>
+              <li>The Quiet Convergence<small>Research Notes</small></li>
+              <li>Notes on Diffusion — 2025 Retrospective<small>Paper Review</small></li>
+              <li>RAG Reconsidered<small>Technical Essay</small></li>
+              <li>Fine-tuning a Small LLM on One GPU<small>Tutorial</small></li>
+              <li>What We Learned at AI Revolution II<small>Event Recap</small></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Editorial Board</h4>
+            <ul>
+              <li>Ayşe Yıldız<small>Editor-in-Chief</small></li>
+              <li>Selin Demir<small>Managing Editor</small></li>
+              <li>Deniz Arslan<small>Research Editor</small></li>
+              <li>Burak Çelik<small>Copy Editor</small></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-categories reveal-stagger">
+        <a class="pub-cat"><div class="pub-cat-num">01</div><h3>Research Notes</h3><p>Original findings and experiments</p></a>
+        <a class="pub-cat"><div class="pub-cat-num">02</div><h3>Paper Reviews</h3><p>What we read, what we think</p></a>
+        <a class="pub-cat"><div class="pub-cat-num">03</div><h3>Essays</h3><p>Opinions, arguments, observations</p></a>
+        <a class="pub-cat"><div class="pub-cat-num">04</div><h3>Tutorials</h3><p>Step-by-step, actually working</p></a>
+      </div>
+
+      <div class="section-head reveal">
+        <span class="eyebrow">// Archive</span>
+        <h2>Recent<br><em>Articles.</em></h2>
+      </div>
+      <div class="article-list reveal">
+        <a class="article-row"><div class="article-num">042</div><div><div class="article-meta"><span class="cat">Research</span><span>Mar 2026</span></div><div class="article-title">The Quiet Convergence</div><p class="article-excerpt">Why frontier model architectures stopped diverging — and what it means for the next wave.</p></div><span class="article-arrow">→</span></a>
+        <a class="article-row"><div class="article-num">041</div><div><div class="article-meta"><span class="cat">Paper Review</span><span>Feb 2026</span></div><div class="article-title">Notes on Diffusion: A 2025 Retrospective</div><p class="article-excerpt">We've had two years to see what diffusion models actually turned out to be good for. Here's the honest answer.</p></div><span class="article-arrow">→</span></a>
+        <a class="article-row"><div class="article-num">040</div><div><div class="article-meta"><span class="cat">Essay</span><span>Jan 2026</span></div><div class="article-title">RAG Reconsidered</div><p class="article-excerpt">Retrieval-augmented generation was supposed to solve hallucination. It didn't. What it did instead is more interesting.</p></div><span class="article-arrow">→</span></a>
+        <a class="article-row"><div class="article-num">039</div><div><div class="article-meta"><span class="cat">Essay</span><span>Dec 2025</span></div><div class="article-title">AI Policy in Turkey: Where We Are</div><p class="article-excerpt">A survey of the regulatory landscape and what it means for practitioners working here.</p></div><span class="article-arrow">→</span></a>
+        <a class="article-row"><div class="article-num">038</div><div><div class="article-meta"><span class="cat">Tutorial</span><span>Nov 2025</span></div><div class="article-title">Fine-Tuning a Small LLM on One GPU</div><p class="article-excerpt">LoRA, QLoRA, and lessons from doing it on hardware that doesn't cost $10,000 a month.</p></div><span class="article-arrow">→</span></a>
+        <a class="article-row"><div class="article-num">037</div><div><div class="article-meta"><span class="cat">Paper Review</span><span>Oct 2025</span></div><div class="article-title">DPO Three Years On</div><p class="article-excerpt">Direct preference optimization was a quiet revolution. Here's how we think about it now that the dust has settled.</p></div><span class="article-arrow">→</span></a>
+        <a class="article-row"><div class="article-num">036</div><div><div class="article-meta"><span class="cat">Event Recap</span><span>Apr 2025</span></div><div class="article-title">What We Learned at AI Revolution II</div><p class="article-excerpt">The talks, the conversations, and the three things everyone kept saying in the hallways.</p></div><span class="article-arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background:var(--navy-800);">
+    <div class="container">
+      <div class="inner-cta reveal">
+        <div>
+          <span class="eyebrow">// Write for AIS</span>
+          <h2>Have Something<br><em>Worth Saying?</em></h2>
+        </div>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn-primary">Submit a pitch →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col"><div class="footer-brand">BAU AIS</div><address>Bahçeşehir University<br>Artificial Intelligence Society<br>Çırağan Cd., Beşiktaş, İstanbul</address></div>
+    <div class="footer-col"><h4>Explore</h4><ul><li><a href="about.html">About</a></li><li><a href="team.html">Team</a></li><li><a href="ai-revolution.html">AI Revolution</a></li><li><a href="events.html">Events</a></li></ul></div>
+    <div class="footer-col"><h4>Publishing</h4><ul><li><a href="publishing.html">AIS Publishing</a></li><li><a href="#">Medium</a></li><li><a href="#">Newsletter</a></li></ul></div>
+    <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">GitHub</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 BAU AIS · All rights reserved</span><span>Built by members, for members</span></div>
+</footer>
+<script src="main.js"></script>
+<script>
+(function(){
+  const c = document.getElementById('pubCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, dpr, drops;
+  const chars = '01ABCDEFαβγΣΩ{}<>=+-*&|/\\#$@%[]:;,.→←↓↑';
+  const fontSize = 14;
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = c.clientWidth; H = c.clientHeight;
+    c.width = W * dpr; c.height = H * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const cols = Math.ceil(W / fontSize);
+    drops = Array.from({length: cols}, () => ({
+      y: Math.random() * H,
+      speed: 0.5 + Math.random() * 1.2,
+      char: chars[Math.floor(Math.random() * chars.length)],
+      changeAt: Math.random() * 30,
+    }));
+  }
+  function draw() {
+    // Fade trail
+    ctx.fillStyle = 'rgba(5,10,31,0.12)';
+    ctx.fillRect(0,0,W,H);
+
+    ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+    drops.forEach((d, i) => {
+      // Occasionally swap char
+      d.changeAt -= 1;
+      if (d.changeAt <= 0) {
+        d.char = chars[Math.floor(Math.random() * chars.length)];
+        d.changeAt = 20 + Math.random() * 40;
+      }
+      // Bright head
+      ctx.fillStyle = 'rgba(77,255,170,0.7)';
+      ctx.fillText(d.char, i * fontSize, d.y);
+      // Faint trailing
+      ctx.fillStyle = 'rgba(77,255,170,0.2)';
+      ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, d.y - fontSize * 1.5);
+      ctx.fillStyle = 'rgba(77,255,170,0.08)';
+      ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, d.y - fontSize * 3);
+
+      d.y += d.speed * 0.8;
+      if (d.y > H + 50) {
+        d.y = -Math.random() * 100;
+        d.speed = 0.4 + Math.random() * 1.3;
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize, { passive: true });
+  resize(); requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
