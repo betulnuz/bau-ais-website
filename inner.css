@@ -451,155 +451,176 @@
 .filter-pill.active { background: var(--green); color: var(--navy-900); border-color: var(--green); }
 
 /* ─────────────────── PUBLISHING ─────────────────── */
-.pub-page { --pub-paper: #eeeae0; --pub-ink: #12171f; }
-.journal-feature {
+
+/* ── Medium feed carousel (rendered by the script in publishing.html) ── */
+
+/* Arrows float over the left/right edges of the row, overlapping the end cards. */
+.medium-carousel-wrap { position: relative; margin-bottom: 4rem; }
+.medium-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 3.2rem;
+  height: 3.2rem;
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 0;
-  background: var(--pub-paper);
-  color: var(--pub-ink);
-  border-top: 4px solid var(--pub-ink);
-  margin-bottom: 4rem;
-}
-@media (max-width: 900px) { .journal-feature { grid-template-columns: 1fr; } }
-.journal-body { padding: 3rem 3rem 3rem 3rem; }
-.journal-meta {
+  place-items: center;
+  background: rgba(5,10,31,0.82);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 50%;
+  color: var(--off-white);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #666;
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+              color 0.3s var(--ease), opacity 0.3s var(--ease);
 }
-.journal-meta span:first-child { color: var(--pub-ink); font-weight: 700; }
-.journal-feature h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  letter-spacing: 0.03em;
-  line-height: 0.95;
-  color: var(--pub-ink);
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
+.medium-arrow-prev { left: -1.1rem; }
+.medium-arrow-next { right: -1.1rem; }
+@media (max-width: 900px) { .medium-arrow-prev { left: 0.5rem; } .medium-arrow-next { right: 0.5rem; } }
+.medium-arrow:hover:not(:disabled) {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--navy-900);
 }
-.journal-feature .lede {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #333;
-  margin-bottom: 1.5rem;
-  font-style: italic;
+.medium-arrow:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.medium-arrow:disabled { opacity: 0; pointer-events: none; }
+
+.medium-carousel {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;            /* arrows and swipe are the affordance */
+  -ms-overflow-style: none;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;   /* native swipe handles touch; JS drag covers mouse */
 }
-.journal-feature .body p { color: #2a2a2a; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; }
-.journal-author {
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(0,0,0,0.12);
-  margin-top: 1rem;
-}
-.journal-author strong { font-weight: 700; color: var(--pub-ink); display: block; }
-.journal-author span { font-family: var(--font-mono); font-size: 0.75rem; color: #666; letter-spacing: 0.05em; }
-.journal-aside {
-  border-left: 1px solid rgba(0,0,0,0.12);
-  padding: 3rem 2.5rem;
+.medium-carousel::-webkit-scrollbar { display: none; }
+/* While dragging with a mouse, follow the cursor instead of snapping.
+   Deliberately no `pointer-events: none` on the cards here — it changes the
+   click target and stops links opening. The click-swallowing handler in
+   publishing.html covers that instead. */
+.medium-carousel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.medium-track { display: flex; gap: 1px; align-items: stretch; }
+.medium-card {
+  flex: 0 0 clamp(250px, 30vw, 340px);
+  scroll-snap-align: start;
+  background: var(--navy-800);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  background: #e8e4d8;
+  color: inherit;
+  transition: background 0.3s;
 }
-@media (max-width: 900px) { .journal-aside { border-left: none; border-top: 1px solid rgba(0,0,0,0.12); } }
-.journal-aside h4 {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #555;
-  margin-bottom: 0.5rem;
+@media (max-width: 560px) { .medium-card { flex-basis: 84%; } }
+.medium-card:hover { background: var(--navy-700); }
+/* Medium's post covers are 3:2 (1200x800). Matching that ratio and using
+   `contain` means the whole cover is visible — these are title cards, so
+   cropping them cuts off text. */
+.medium-thumb {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--navy-900);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-.journal-aside ul { list-style: none; padding: 0; }
-.journal-aside li {
-  padding: 0.7rem 0;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  font-size: 0.95rem;
-  color: var(--pub-ink);
-  line-height: 1.4;
-}
-.journal-aside li small {
+.medium-thumb img {
+  width: 100%; height: 100%;
+  object-fit: contain;
   display: block;
+  -webkit-user-drag: none;
+  user-select: none;
+  filter: saturate(0.55) contrast(1.05);
+  transition: transform 0.6s var(--ease-out), filter 0.4s;
+}
+.medium-card:hover .medium-thumb img { transform: scale(1.05); filter: none; }
+.medium-thumb.is-empty {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.12em;
+  color: var(--navy-500);
+}
+.medium-card-body {
+  padding: 1.6rem 1.5rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.7rem;
+}
+.medium-meta {
   font-family: var(--font-mono);
   font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  color: #777;
-  margin-top: 0.25rem;
-  text-transform: uppercase;
-}
-
-.article-list { display: flex; flex-direction: column; }
-.article-row {
-  display: grid;
-  grid-template-columns: 80px 1fr auto;
-  gap: 2rem;
-  padding: 2rem 1rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  align-items: start;
-  transition: background 0.3s, padding-left 0.3s;
-  color: inherit;
-}
-.article-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
-.article-row:hover { background: var(--navy-800); padding-left: 2rem; }
-.article-row:hover .article-title { color: var(--green); }
-.article-row:hover .article-arrow { transform: translateX(6px); color: var(--green); }
-.article-num {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  letter-spacing: 0.06em;
-  color: var(--navy-400);
-}
-.article-meta {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
   letter-spacing: 0.15em;
-  color: var(--gray-500);
   text-transform: uppercase;
-  margin-bottom: 0.8rem;
+  color: var(--gray-500);
   display: flex;
-  gap: 1.5rem;
+  gap: 1.2rem;
 }
-.article-meta .cat { color: var(--green); }
-.article-title {
+.medium-meta .cat { color: var(--green); }
+.medium-title {
   font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  font-size: 1.35rem;
   letter-spacing: 0.03em;
-  line-height: 0.95;
+  line-height: 1.05;
   color: var(--off-white);
   text-transform: uppercase;
-  margin-bottom: 0.6rem;
   transition: color 0.25s;
 }
-.article-excerpt { color: var(--gray-500); font-size: 0.9rem; line-height: 1.6; max-width: 580px; }
-.article-arrow { color: var(--gray-700); font-family: var(--font-mono); font-size: 1.1rem; align-self: center; transition: transform 0.25s, color 0.25s; }
-@media (max-width: 768px) { .article-row { grid-template-columns: 1fr; gap: 0.5rem; } .article-arrow { display: none; } }
+.medium-card:hover .medium-title { color: var(--green); }
+.medium-excerpt { color: var(--gray-500); font-size: 0.85rem; line-height: 1.6; }
+.medium-cta {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-700);
+  transition: color 0.25s;
+}
+.medium-card:hover .medium-cta { color: var(--green); }
 
-.pub-categories {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: rgba(255,255,255,0.06);
-  margin-bottom: 4rem;
-}
-@media (max-width: 768px) { .pub-categories { grid-template-columns: 1fr 1fr; } }
-.pub-cat {
+/* ── Loading skeletons ── */
+.medium-skeleton {
+  flex: 0 0 clamp(250px, 30vw, 340px);
   background: var(--navy-800);
-  padding: 2.5rem 2rem;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.3s;
-  display: block;
+  padding-bottom: 1.8rem;
 }
-.pub-cat:hover { background: var(--navy-700); }
-.pub-cat-num { font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 0.06em; color: var(--navy-500); display: block; line-height: 1; margin-bottom: 0.8rem; }
-.pub-cat h3 { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.04em; color: var(--white); text-transform: uppercase; margin-bottom: 0.3rem; }
-.pub-cat p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--gray-500); letter-spacing: 0.08em; }
+.medium-skeleton .sk-thumb,
+.medium-skeleton .sk-line {
+  display: block;
+  background: linear-gradient(90deg, var(--navy-700) 0%, var(--navy-600) 50%, var(--navy-700) 100%);
+  background-size: 200% 100%;
+  animation: skShimmer 1.4s linear infinite;
+}
+.medium-skeleton .sk-thumb { aspect-ratio: 3 / 2; margin-bottom: 1.6rem; }
+.medium-skeleton .sk-line { height: 0.7rem; margin: 0.6rem 1.5rem; }
+.medium-skeleton .sk-sm { width: 35%; }
+.medium-skeleton .sk-short { width: 60%; }
+@keyframes skShimmer { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .medium-skeleton .sk-thumb, .medium-skeleton .sk-line { animation: none; } }
+
+/* ── Feed unavailable ── */
+.medium-carousel.medium-failed { overflow: visible; background: var(--navy-800); }
+.medium-carousel.medium-failed .medium-track { display: block; }
+.medium-error { padding: 3.5rem 2rem; text-align: center; }
+.medium-error h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  letter-spacing: 0.03em;
+  color: var(--off-white);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.medium-error p { color: var(--gray-500); font-size: 0.9rem; line-height: 1.6; max-width: 46ch; margin: 0 auto 1.8rem; }
+
+.medium-more { margin-top: 3rem; text-align: center; }
 
 /* ─────────────────── CONTACT ─────────────────── */
 .contact-grid {
