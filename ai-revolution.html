@@ -34,6 +34,25 @@
       font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.22em;
       color: rgba(77,255,170,0.4); text-transform: uppercase; z-index: 2; pointer-events: none;
     }
+    .ps-venue {
+      font-family: var(--font-mono); font-size: 0.72rem !important; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--green) !important; margin-bottom: 1rem !important;
+    }
+    .ps-speakers {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+      gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06);
+      margin-top: 2rem;
+    }
+    .ps-speaker {
+      display: flex; flex-direction: column; gap: 0.3rem;
+      padding: 1.1rem 1.25rem; background: var(--navy-800);
+    }
+    .ps-speaker strong { color: var(--white); font-size: 0.95rem; }
+    .ps-speaker span { color: var(--gray-300); font-size: 0.78rem; line-height: 1.45; }
+    .ps-speaker em {
+      font-style: normal; font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-top: 0.3rem;
+    }
   </style>
 
   <section class="page-hero summit-hero" style="position:relative;overflow:hidden;">
@@ -41,22 +60,22 @@
     <div class="rev-corners"><span></span><span></span><span></span><span></span></div>
     <div class="rev-status-bar">
       <span>// SIGNAL · INCOMING</span>
-      <span>FREQ 21.05 MHz</span>
+      <span>NEXT EDITION · LOADING</span>
     </div>
     <div class="container" style="position:relative;z-index:1;">
-      <span class="eyebrow">// 03 / AI Revolution · Edition II</span>
+      <span class="eyebrow">// 03 / AI Revolution · Edition III</span>
 
-      <h1>AI<br><em>Revolution</em><br>2026.</h1>
+      <h1>AI<br><em>Revolution</em><br>Coming Soon.</h1>
       <p class="lede"> BAU Artificial Intelligence Society Presents.</p>
-      <p class="lede"> A one-day student-led summit bringing together hands-on workshops,
-      inspiring talks, and cross-disciplinary conversations on the future of artificial intelligence.</p>
+      <p class="lede"> A student-led summit bringing together hands-on workshops,
+      inspiring talks, and cross-disciplinary conversations on the future of artificial intelligence.
+      The next edition is in the works — details will be announced soon.</p>
 
       <div class="summit-meta">
-        <div class="sm-item"><strong>Date</strong><span>April 18–19, 2026</span></div>
-        <div class="sm-item"><strong>Venue</strong><span>BAU Beşiktaş</span></div>
-        <div class="sm-item"><strong>Format</strong><span>In-person </span></div>
-        <div class="sm-item"><strong>Capacity</strong><span>200+</span></div>
-        <div class="sm-item"><strong>Status</strong><span><span class="live-dot"></span> Registration soon</span></div>
+        <div class="sm-item"><strong>Date</strong><span>TBA</span></div>
+        <div class="sm-item"><strong>Venue</strong><span>TBA</span></div>
+        <div class="sm-item"><strong>Format</strong><span>In-person</span></div>
+        <div class="sm-item"><strong>Status</strong><span><span class="live-dot"></span> Coming soon</span></div>
       </div>
     </div>
   </section>
@@ -64,13 +83,15 @@
   <section class="section-pad" style="background:var(--navy-900);">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow"></span>
+        <span class="eyebrow">// About</span>
         <h2>About<br><em>the Summit</em></h2>
         <p> AI Revolution is the flagship summit of Bahçeşehir University Artificial Intelligence
     Society, designed to bring students, researchers, entrepreneurs, and industry
     professionals together around the rapidly evolving world of artificial intelligence.</p>
       </div>
-      <!---<div class="tracks reveal-stagger">
+    </div>
+  </section>
+      <!--<div class="tracks reveal-stagger">
         <div class="track">
           <span class="track-tag">Track A</span>
           <h3>Frontiers of Research</h3>
@@ -105,10 +126,7 @@
           </ul>
         </div>
       </div>
-    </div>
-  </section>
---->
-<!----
+-->
   <section class="section-pad" style="background:var(--navy-800);">
     <div class="container">
       <div class="section-head reveal">
@@ -117,35 +135,63 @@
       </div>
       <div class="reveal">
         <div class="past-summit">
-          <div class="ps-year">2025</div>
+          <div class="ps-year">2026</div>
           <div class="ps-content">
-            <h3>Beyond the Hype</h3>
-            <p>After a year of AI everywhere, we asked harder questions. What's real, what's noise, and what's coming next? Speakers from research labs, production teams, and policy organizations joined us for what became our most discussed edition.</p>
+            <h3>AI Revolution 360 II</h3>
+            <p class="ps-venue">21 May 2026 · 09:00–18:00 · BAU South Campus, Conference Hall 2</p>
+            <p>"The gathering shaping the future." The second edition of our summit was a full day of talks and hands-on workshops with speakers from IBM, AWS, Enerjisa, Ak Portföy, BAU's AI law and ethics research center, and Turkey's startup ecosystem — from training your own GPT to the legal and ethical questions AI raises. Sponsored by AISHA and WOYAX, with the AI Law &amp; Ethics workshop co-hosted with BAU Law Club.</p>
             <div class="ps-stats">
-              <div><strong>1,000+</strong><span>Attendees</span></div>
-              <div><strong>22</strong><span>Talks</span></div>
-              <div><strong>6</strong><span>Workshops</span></div>
-              <div><strong>14</strong><span>Sponsors</span></div>
+              <div><strong>120</strong><span>Participants</span></div>
+              <div><strong>12</strong><span>Speakers</span></div>
+              <div><strong>4</strong><span>Workshops</span></div>
             </div>
+            <div class="ps-speakers">
+              <div class="ps-speaker"><strong>Fatih Kahraman</strong><span>Director of International R&amp;D and Technology Management, Bahçeşehir University</span><em>Talk</em></div>
+              <div class="ps-speaker"><strong>Gaye Çalışkıner</strong><span>Business Technology Leader, IBM</span><em>Talk</em></div>
+              <div class="ps-speaker"><strong>Ahmet Yazıcı</strong><span>Senior Cloud Operations, AWS</span><em>Talk</em></div>
+              <div class="ps-speaker"><strong>Tümay Solak</strong><span>Innovation Manager, Enerjisa</span><em>Talk</em></div>
+              <div class="ps-speaker"><strong>Ertunç Tümen</strong><span>Executive Vice President, Ak Portföy</span><em>Talk</em></div>
+              <div class="ps-speaker"><strong>Birkant Çelik</strong><span>Co-Founder, Fonangels · Founder, Kopernik TR</span><em>Talk</em></div>
+              <div class="ps-speaker"><strong>Doç. Dr. Şener Özönder</strong><span>Founder &amp; AI Researcher, ArtificaX</span><em>Talk</em></div>
+              <div class="ps-speaker"><strong>Prof. Dr. Ahmet Yayla &amp; Dr. Mert Nomer</strong><span>Director · Deputy Director, YETİ-YZ AI Law and Ethics Research Center</span><em>Workshop · AI Law &amp; Ethics</em></div>
+              <div class="ps-speaker"><strong>Barış Yüksel</strong><span>Founder &amp; CEO, SchemaPlus</span><em>LLM Workshop · How to Train Your Own GPT</em></div>
+              <div class="ps-speaker"><strong>Eren Gemici</strong><span>Tutor &amp; ML Engineer</span><em>Workshop</em></div>
+              <div class="ps-speaker"><strong>Mutlu Yiğit</strong><span>Founder, MTL Sound Production</span><em>Workshop</em></div>
+            </div>
+            <a href="https://www.instagram.com/p/DZW_tMniQ6o/" target="_blank" rel="noopener" style="display:inline-block;margin-top:1.5rem;color:var(--green);">See it in our social media →</a>
           </div>
         </div>
         <div class="past-summit">
           <div class="ps-year">2024</div>
           <div class="ps-content">
-            <h3>The Beginning</h3>
-            <p>Our first summit. We had no idea if anyone would show up. Five hundred people did. We learned more from running it than from attending a dozen other conferences. It set the template for everything that followed.</p>
+            <h3>AI Revolution 360</h3>
+            <p class="ps-venue">21–22 December 2024 · BAU South Campus, Fazıl Say Concert Hall</p>
+            <p>Our first summit brought together professionals, academics, and students to discuss the impact of artificial intelligence across sectors, with speakers from NVIDIA, Microsoft, Amazon, IBM, TÜBİSAD, and Turkey's AI and startup ecosystem. Sessions covered digital transformation, data privacy and deepfakes, quantum computing, IoT, and AI in business.</p>
             <div class="ps-stats">
-              <div><strong>500+</strong><span>Attendees</span></div>
-              <div><strong>12</strong><span>Talks</span></div>
-              <div><strong>3</strong><span>Workshops</span></div>
-              <div><strong>8</strong><span>Sponsors</span></div>
+              <div><strong>2</strong><span>Days</span></div>
+              <div><strong>15</strong><span>Speakers</span></div>
+              <div><strong>12</strong><span>Sessions</span></div>
             </div>
+            <div class="ps-speakers">
+              <div class="ps-speaker"><strong>Fatih Kahraman</strong><span>Head of AI Engineering, Bahçeşehir University</span><em>The AI Revolution</em></div>
+              <div class="ps-speaker"><strong>Mehmet Ali Tombalak</strong><span>Chairman, TÜBİSAD</span><em>AI in Digital Transformation</em></div>
+              <div class="ps-speaker"><strong>Duygu Balıkçıoğlu</strong><span>Country Manager, NVIDIA</span><em>Leadership &amp; Innovation in AI</em></div>
+              <div class="ps-speaker"><strong>Tayfun Karabayır &amp; Duygu Kayaman</strong><span>Partner Technology Manager · Business Program Manager &amp; Seeing AI Project Lead, Microsoft</span><em>AI from Accessibility to Business</em></div>
+              <div class="ps-speaker"><strong>Emrah Gürsoy</strong><span>Senior Leader, Amazon</span><em>The Power of Data</em></div>
+              <div class="ps-speaker"><strong>Gökçen Karasu</strong><span>Technical Leader, IBM</span><em>Quantum Computers and AI</em></div>
+              <div class="ps-speaker"><strong>Volkan Kılıç</strong><span>Vice President, AI Policy Association (AIPA) · Founder, Kuantum Araştırma</span><em>AI and the Business World</em></div>
+              <div class="ps-speaker"><strong>Arif Candemir</strong><span>Founder, Data Privacy Türkiye</span><em>A New Reality Shaped by AI: The Deepfake Threat</em></div>
+              <div class="ps-speaker"><strong>Gökhan Yeşilyurt &amp; Can Güleren</strong><span>CEO &amp; Co-Founder, IoTIO · Founder, IoT Türkiye</span><em>The Present and Future of IoT</em></div>
+              <div class="ps-speaker"><strong>Ayhan Demirci</strong><span>CEO, Digital Brain Technologies · Data &amp; AI Executive Consultant, MEXT</span><em>Technology &amp; AI in Practice</em></div>
+              <div class="ps-speaker"><strong>Ahmet Eren Öztürkmen</strong><span>CEO, Car Studio AI</span><em>Building an AI Startup as a Student</em></div>
+              <div class="ps-speaker"><strong>Ayşe Nur Çelik &amp; Altan Emre Demirci</strong><span>Üçüncübinyıl Akademi</span><em>Designing Your Future in Tech</em></div>
+            </div>
+            <a href="https://www.instagram.com/p/DD36_JPi1xS/" target="_blank" rel="noopener" style="display:inline-block;margin-top:1.5rem;color:var(--green);">See it in our social media →</a>
           </div>
         </div>
       </div>
     </div>
   </section>
-  -->
 
   <section class="section-pad" style="background:var(--navy-900);">
     <div class="container">
@@ -166,8 +212,8 @@
   <div class="footer-inner">
     <div class="footer-col"><div class="footer-brand">BAU AIS</div><address>Bahçeşehir University<br>Artificial Intelligence Society<br>Çırağan Cd., Beşiktaş, İstanbul</address></div>
     <div class="footer-col"><h4>Explore</h4><ul><li><a href="about.html">About</a></li><li><a href="team.html">Team</a></li><li><a href="ai-revolution.html">AI Revolution</a></li><li><a href="events.html">Events</a></li></ul></div>
-    <div class="footer-col"><h4>Publishing</h4><ul><li><a href="publishing.html">AIS Publishing</a></li><li><a href="#">Medium</a></li><li><a href="#">Newsletter</a></li></ul></div>
-    <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">GitHub</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Publishing</h4><ul><li><a href="publishing.html">AIS Publishing</a></li><li><a href="https://medium.com/@bau_ai_society" target="_blank" rel="noopener">Medium</a></li><li><a href="#">Newsletter</a></li></ul></div>
+    <div class="footer-col"><h4>Connect</h4><ul><li><a href="https://www.instagram.com/ais.bau/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.linkedin.com/company/ais-bau/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="#">GitHub</a></li><li><a href="contact.html">Contact</a></li></ul></div>
   </div>
   <div class="footer-bottom"><span>© 2026 BAU AIS · All rights reserved</span><span>Built by members, for members</span></div>
 </footer>
